@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { ToastContainer } from "react-toastify"
 import TransactionList from "./components/transaction-list"
 import Balance from "./components/balance"
@@ -12,10 +12,14 @@ export interface Transaction {
 }
 
 const App = () => {
-  const [transactions, setTransactions] = useState<Transaction[]>([
-    { id: 1, text: "Salary", amount: 500 },
-    { id: 2, text: "Foods", amount: -100 },
-  ])
+  const [transactions, setTransactions] = useState<Transaction[]>(
+    JSON.parse(localStorage.getItem("transactions")!) || []
+  )
+
+  // Persist data on local storage
+  useEffect(() => {
+    localStorage.setItem("transactions", JSON.stringify(transactions))
+  }, [transactions])
 
   const total = useMemo(() => {
     return transactions.reduce((acc, data) => acc + data.amount, 0)
