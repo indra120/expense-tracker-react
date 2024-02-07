@@ -1,12 +1,11 @@
-import React from "react"
-import { Transaction } from "../app"
+import type { Transaction } from "@/app"
 
-interface TransactionListProps {
+interface Props {
   transactions: Transaction[]
   handleDelete: (id: number) => () => void
 }
 
-const TransactionList: React.FC<TransactionListProps> = (props) => (
+const TransactionList: React.FC<Props> = (props) => (
   <>
     <h3>History</h3>
 
@@ -14,13 +13,8 @@ const TransactionList: React.FC<TransactionListProps> = (props) => (
       {props.transactions.map(({ id, text, amount }) => (
         <li className={`list ${amount < 0 ? "minus" : "plus"}`} key={id}>
           {text}
-          <span>
-            {amount < 0 ? "-" : ""}${Math.abs(amount)}
-          </span>
-
-          <button onClick={props.handleDelete(id)} className="delete-btn">
-            x
-          </button>
+          <span>{amount < 0 ? "-" : ""}${Math.abs(amount)}</span>
+          <button onClick={props.handleDelete(id)} className="delete-btn">x</button>
         </li>
       ))}
     </ul>

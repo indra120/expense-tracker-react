@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react"
 import { ToastContainer } from "react-toastify"
-import TransactionList from "./components/transaction-list"
-import Balance from "./components/balance"
-import IncomeExpenses from "./components/income-expenses"
-import AddTransaction from "./components/add-transaction"
+import TransactionList from "@/components/transaction-list"
+import Balance from "@/components/balance"
+import IncomeExpenses from "@/components/income-expenses"
+import AddTransaction from "@/components/add-transaction"
 
 export interface Transaction {
   id: number
@@ -50,10 +50,7 @@ const App = () => {
       <div className="container">
         <Balance total={total} />
         <IncomeExpenses income={+income} expenses={+expenses} />
-        <TransactionList
-          transactions={transactions}
-          handleDelete={deleteTransaction}
-        />
+        <TransactionList transactions={transactions} handleDelete={deleteTransaction} />
         <AddTransaction setTransactions={setTransactions} />
       </div>
 

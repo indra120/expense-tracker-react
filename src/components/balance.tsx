@@ -1,11 +1,11 @@
-interface BalanceProps {
+interface Props {
   total: number
 }
 
-const Balance: React.FC<BalanceProps> = (props) => (
+const Balance: React.FC<Props> = ({ total }) => (
   <>
     <h4>Your Balance</h4>
-    <h1 id="balance">${props.total}</h1>
+    <h1>${total}</h1>
   </>
 )
 

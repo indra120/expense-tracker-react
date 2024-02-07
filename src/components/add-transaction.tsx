@@ -1,12 +1,12 @@
 import { useState } from "react"
 import { toast } from "react-toastify"
-import { Transaction } from "../app"
+import type { Transaction } from "@/app"
 
-interface AddTransactionProps {
+interface Props {
   setTransactions: React.Dispatch<React.SetStateAction<Transaction[]>>
 }
 
-const AddTransaction: React.FC<AddTransactionProps> = (props) => {
+const AddTransaction: React.FC<Props> = (props) => {
   const [newTransaction, setNewTransaction] = useState({
     text: "",
     amount: "",
@@ -30,6 +30,10 @@ const AddTransaction: React.FC<AddTransactionProps> = (props) => {
     setNewTransaction({ text: "", amount: "" })
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTransaction((v) => ({ ...v, [e.target.name]: e.target.value }))
+  }
+
   return (
     <>
       <h3>Add new transaction</h3>
@@ -37,33 +41,12 @@ const AddTransaction: React.FC<AddTransactionProps> = (props) => {
       <form id="form" onSubmit={handleSubmit}>
         <div className="form-control">
           <label htmlFor="text">Text</label>
-
-          <input
-            type="text"
-            id="text"
-            value={newTransaction.text}
-            onChange={(e) => {
-              setNewTransaction((v) => ({ ...v, text: e.target.value }))
-            }}
-            placeholder="Enter text..."
-          />
+          <input name="text" value={newTransaction.text} onChange={handleChange} type="text" id="text" placeholder="Enter text..." />
         </div>
 
         <div className="form-control">
-          <label htmlFor="amount">
-            Amount <br />
-            (negative - expense, positive - income)
-          </label>
-
-          <input
-            type="text"
-            id="amount"
-            value={newTransaction.amount}
-            onChange={(e) => {
-              setNewTransaction((v) => ({ ...v, amount: e.target.value }))
-            }}
-            placeholder="Enter amount..."
-          />
+          <label htmlFor="amount">Amount <br />(negative - expense, positive - income)</label>
+          <input name="amount" value={newTransaction.amount} onChange={handleChange} type="text" id="amount" placeholder="Enter amount..." />
         </div>
 
         <button className="btn">Add transaction</button>
